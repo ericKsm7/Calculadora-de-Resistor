@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calculadora de Resistor - Interface Personalizada</title>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        header {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #2a9d8f;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.2rem;
+            color: #264653;
+        }
+        /* Container do resistor */
+        .resistor-container {
+            position: relative;
+            width: 320px;
+            height: 80px;
+            margin-bottom: 30px;
+        }
+        /* Corpo do resistor */
+        .resistor-body {
+            position: absolute;
+            top: 25px;
+            left: 40px;
+            width: 240px;
+            height: 30px;
+            background: linear-gradient(90deg, #d2b48c 0%, #c19a6b 100%);
+            border-radius: 15px;
+            box-shadow: inset 0 0 8px #a67c52;
+        }
+        /* Terminais do resistor */
+        .terminal {
+            position: absolute;
+            top: 35px;
+            width: 40px;
+            height: 10px;
+            background: #555;
+            border-radius: 5px;
+        }
+        .terminal.left {
+            left: 0;
+        }
+        .terminal.right {
+            right: 0;
+        }
+        /* Faixas coloridas */
+        .band {
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        .band1 { left: 80px; }
+        .band2 { left: 110px; }
+        .band3 { left: 140px; }
+        .band4 { left: 170px; }
+
+        /* Formulário */
+        form {
+            max-width: 320px;
+            width: 100%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #444;
+        }
+        select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2a9d8f;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #21867a;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #264653;
+            text-align: center;
+        }
+
+        /* Rodapé com ícones */
+        footer {
+            margin-top: 25px;
+            text-align: center;
+        }
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        .social-icons a {
+            color: #2a9d8f;
+            font-size: 35px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #21867a;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Calculadora de Resistor</h1>
+    <p>Desenvolvido por Erick</p>
+</header>
+
+<div class="resistor-container" aria-label="Representação visual do resistor">
+    <div class="terminal left"></div>
+    <div class="resistor-body"></div>
+    <div class="band band1" id="band1-color" title="Faixa 1"></div>
+    <div class="band band2" id="band2-color" title="Faixa 2"></div>
+    <div class="band band3" id="band3-color" title="Faixa 3"></div>
+    <div class="band band4" id="band4-color" title="Faixa 4"></div>
+    <div class="terminal right"></div>
+</div>
+
+<form id="resistorForm" aria-label="Formulário para selecionar cores das faixas do resistor">
+    <label for="band1">1ª Faixa (Dígito 1):</label>
+    <select id="band1" name="band1">
+        <option value="black">Preto (0)</option>
+        <option value="brown">Marrom (1)</option>
+        <option value="red">Vermelho (2)</option>
+        <option value="orange">Laranja (3)</option>
+        <option value="yellow">Amarelo (4)</option>
+        <option value="green">Verde (5)</option>
+        <option value="blue">Azul (6)</option>
+        <option value="violet">Violeta (7)</option>
+        <option value="gray">Cinza (8)</option>
+        <option value="white">Branco (9)</option>
+    </select>
+
+    <label for="band2">2ª Faixa (Dígito 2):</label>
+    <select id="band2" name="band2">
+        <option value="black">Preto (0)</option>
+        <option value="brown">Marrom (1)</option>
+        <option value="red">Vermelho (2)</option>
+        <option value="orange">Laranja (3)</option>
+        <option value="yellow">Amarelo (4)</option>
+        <option value="green">Verde (5)</option>
+        <option value="blue">Azul (6)</option>
+        <option value="violet">Violeta (7)</option>
+        <option value="gray">Cinza (8)</option>
+        <option value="white">Branco (9)</option>
+    </select>
+
+    <label for="band3">3ª Faixa (Multiplicador):</label>
+    <select id="band3" name="band3">
+        <option value="black">Preto (×1)</option>
+        <option value="brown">Marrom (×10)</option>
+        <option value="red">Vermelho (×100)</option>
+        <option value="orange">Laranja (×1k)</option>
+        <option value="yellow">Amarelo (×10k)</option>
+        <option value="green">Verde (×100k)</option>
+        <option value="blue">Azul (×1M)</option>
+        <option value="violet">Violeta (×10M)</option>
+        <option value="gray">Cinza (×100M)</option>
+        <option value="white">Branco (×1G)</option>
+        <option value="gold">Dourado (×0.1)</option>
+        <option value="silver">Prateado (×0.01)</option>
+    </select>
+
+    <label for="band4">4ª Faixa (Tolerância):</label>
+    <select id="band4" name="band4">
+        <option value="brown">Marrom (±1%)</option>
+        <option value="red">Vermelho (±2%)</option>
+        <option value="gold">Dourado (±5%)</option>
+        <option value="silver">Prateado (±10%)</option>
+        <option value="none">Nenhuma (±20%)</option>
+    </select>
+
+    <button type="button" onclick="calculateResistor()">Calcular</button>
+</form>
+
+<div id="result" role="alert" aria-live="polite"></div>
+
+<!-- Redes sociais -->
+<footer>
+    <div class="social-icons">
+        <a href="https://wa.me/5583987185089" target="_blank" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://instagram.com/ericks_m0" target="_blank" title="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
+</footer>
+
+<script>
+    const bandColors = {
+        black: '#000000',
+        brown: '#8B4513',
+        red: '#FF0000',
+        orange: '#FFA500',
+        yellow: '#FFFF00',
+        green: '#008000',
+        blue: '#0000FF',
+        violet: '#8A2BE2',
+        gray: '#808080',
+        white: '#FFFFFF',
+        gold: '#FFD700',
+        silver: '#C0C0C0',
+        none: 'transparent'
+    };
+
+    function updateBandColors() {
+        document.getElementById('band1-color').style.backgroundColor = bandColors[document.getElementById('band1').value];
+        document.getElementById('band2-color').style.backgroundColor = bandColors[document.getElementById('band2').value];
+        document.getElementById('band3-color').style.backgroundColor = bandColors[document.getElementById('band3').value];
+        document.getElementById('band4-color').style.backgroundColor = bandColors[document.getElementById('band4').value];
+    }
+
+    document.querySelectorAll('select').forEach(select => {
+        select.addEventListener('change', updateBandColors);
+    });
+
+    function calculateResistor() {
+        const band1 = document.getElementById('band1').value;
+        const band2 = document.getElementById('band2').value;
+        const band3 = document.getElementById('band3').value;
+        const band4 = document.getElementById('band4').value;
+
+        const digitMap = {
+            black: 0, brown: 1, red: 2, orange: 3, yellow: 4,
+            green: 5, blue: 6, violet: 7, gray: 8, white: 9
+        };
+
+        const multiplierMap = {
+            black: 1,
+            brown: 10,
+            red: 100,
+            orange: 1000,
+            yellow: 10000,
+            green: 100000,
+            blue: 1000000,
+            violet: 10000000,
+            gray: 100000000,
+            white: 1000000000,
+            gold: 0.1,
+            silver: 0.01
+        };
+
+        const toleranceMap = {
+            brown: '±1%',
+            red: '±2%',
+            gold: '±5%',
+            silver: '±10%',
+            none: '±20%'
+        };
+
+        if (!(band1 in digitMap) || !(band2 in digitMap) || !(band3 in multiplierMap) || !(band4 in toleranceMap)) {
+            document.getElementById('result').textContent = "Selecione cores válidas!";
+            return;
+        }
+
+        const value = (digitMap[band1] * 10 + digitMap[band2]) * multiplierMap[band3];
+        const tolerance = toleranceMap[band4];
+
+        let displayValue;
+        if (value >= 1000000) {
+            displayValue = (value / 1000000) + " MΩ";
+        } else if (value >= 1000) {
+            displayValue = (value / 1000) + " kΩ";
+        } else {
+            displayValue = value + " Ω";
+        }
+
+        document.getElementById('result').textContent = `Valor: ${displayValue} ${tolerance}`;
+    }
+
+    // Inicializa cores ao carregar a página
+    updateBandColors();
+</script>
+
+</body>
+</html>
